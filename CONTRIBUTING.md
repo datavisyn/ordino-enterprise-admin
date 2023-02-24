@@ -426,6 +426,21 @@ You also need to install MySQL or [MariaDB](https://mariadb.com/downloads).
 
 Ensure that you are using Python version 3.8, 3.9, 3.10 or 3.11, then proceed with:
 
+##### datavisyn: Installing all required OS installs
+
+```bash
+python3 -m venv venv # setup a python3 virtualenv
+
+source venv/bin/activate
+
+sudo apt-get install build-essential libssl-dev libffi-dev python3-dev python3-pip libsasl2-dev libldap2-dev default-libmysqlclient-dev mysql-server libsasl2-dev mariadb-server
+
+make install
+
+npm install
+npm install currencyformatter.js --save
+```
+
 ```bash
 # Create a virtual environment and activate it (recommended)
 python3 -m venv venv # setup a python3 virtualenv
