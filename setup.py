@@ -54,8 +54,8 @@ with open(VERSION_INFO_FILE, "w") as version_file:
 
 
 setup(
-    name="apache-superset",
-    description="A modern, enterprise-ready business intelligence web application",
+    name="ordino-enterprise-admin",
+    description="The administation dashboard for Ordino Enterprise",
     long_description=long_description,
     long_description_content_type="text/markdown",
     version=version_string,
@@ -181,10 +181,10 @@ setup(
         "netezza": ["nzalchemy>=11.0.2"],
     },
     python_requires="~=3.8",
-    author="Apache Software Foundation",
-    author_email="dev@superset.apache.org",
-    url="https://superset.apache.org/",
-    download_url="https://www.apache.org/dist/superset/" + version_string,
+    author="datavisyn GmbH and Apache Software Foundation",
+    author_email="contact@datavisyn.io",
+    url="https://datavisyn.io",
+    download_url="https://github.com/datavisyn/ordino-enterprise-admin/releases/" + version_string,
     classifiers=[
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
