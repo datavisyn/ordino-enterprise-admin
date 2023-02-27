@@ -244,18 +244,18 @@ class SupersetAppInitializer:  # pylint: disable=too-many-public-methods
             category_label=__("Data"),
         )
 
-        appbuilder.add_view(
-            LandscapeView,
-            "Landscapes",  # has to be contained in Mixins
-            label=__("Landscape Configurations"),
-            icon="fa-database",
-            category="Data",
-            category_label=__("Data"),
-        )
+        # appbuilder.add_view(
+        #     LandscapeView,
+        #     "Landscapes",  # has to be contained in Mixins
+        #     label=__("Landscape Configurations"),
+        #     icon="fa-database",
+        #     category="Data",
+        #     category_label=__("Data"),
+        # )
 
         appbuilder.add_link(
             "Databases",
-            label=__("Landscapes"),
+            label=__("Landscape TTT"),
             href="/landscapeview/list/",
             icon="fa-database",
             category="",
@@ -325,7 +325,6 @@ class SupersetAppInitializer:  # pylint: disable=too-many-public-methods
         appbuilder.add_view_no_menu(Superset)
         appbuilder.add_view_no_menu(TableColumnInlineView)
         appbuilder.add_view_no_menu(TableModelView)
-        appbuilder.add_view_no_menu(LandscapeView)
         appbuilder.add_view_no_menu(TableSchemaView)
         appbuilder.add_view_no_menu(TabStateView)
         appbuilder.add_view_no_menu(TaggedObjectView)

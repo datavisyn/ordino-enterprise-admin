@@ -109,18 +109,18 @@ function DatabaseList({ addDangerToast, addSuccessToast }: DatabaseListProps) {
   const [currentDatabase, setCurrentDatabase] = useState<DatabaseObject | null>(
     null,
   );
-  const [allowUploads, setAllowUploads] = useState<boolean>(false);
+  // const [allowUploads, setAllowUploads] = useState<boolean>(false);
   const isAdmin = isUserAdmin(user);
-  const showUploads = allowUploads || isAdmin;
+  // const showUploads = allowUploads || isAdmin;
 
   const [preparingExport, setPreparingExport] = useState<boolean>(false);
   const { roles } = user;
-  const {
-    CSV_EXTENSIONS,
-    COLUMNAR_EXTENSIONS,
-    EXCEL_EXTENSIONS,
-    ALLOWED_EXTENSIONS,
-  } = useSelector<any, ExtensionConfigs>(state => state.common.conf);
+  // const {
+  //   CSV_EXTENSIONS,
+  //   COLUMNAR_EXTENSIONS,
+  //   EXCEL_EXTENSIONS,
+  //   ALLOWED_EXTENSIONS,
+  // } = useSelector<any, ExtensionConfigs>(state => state.common.conf);
 
   useEffect(() => {
     if (query?.databaseAdded) {
@@ -179,110 +179,65 @@ function DatabaseList({ addDangerToast, addSuccessToast }: DatabaseListProps) {
     setDatabaseModalOpen(modalOpen);
   }
 
-  const canCreate = hasPerm('can_write');
+  // const canCreate = hasPerm('can_write');
   const canEdit = hasPerm('can_write');
   const canDelete = hasPerm('can_write');
   const canExport =
     hasPerm('can_export') && isFeatureEnabled(FeatureFlag.VERSIONED_EXPORT);
 
-  const { canUploadCSV, canUploadColumnar, canUploadExcel } = uploadUserPerms(
-    roles,
-    CSV_EXTENSIONS,
-    COLUMNAR_EXTENSIONS,
-    EXCEL_EXTENSIONS,
-    ALLOWED_EXTENSIONS,
-  );
+  // const isDisabled = isAdmin && !allowUploads;
 
-  const isDisabled = isAdmin && !allowUploads;
+  // const hasFileUploadEnabled = () => {
+  //   const payload = {
+  //     filters: [
+  //       { col: 'allow_file_upload', opr: 'upload_is_enabled', value: true },
+  //     ],
+  //   };
+  //   SupersetClient.get({
+  //     endpoint: `/api/v1/database/?q=${rison.encode(payload)}`,
+  //   }).then(({ json }: Record<string, any>) => {
+  //     // There might be some existings Gsheets and Clickhouse DBs
+  //     // with allow_file_upload set as True which is not possible from now on
+  //     const allowedDatabasesWithFileUpload =
+  //       json?.result?.filter(
+  //         (database: any) => database?.engine_information?.supports_file_upload,
+  //       ) || [];
+  //     setAllowUploads(allowedDatabasesWithFileUpload?.length >= 1);
+  //   });
+  // };
 
-  const uploadDropdownMenu = [
-    {
-      label: t('Upload file to database'),
-      childs: [
-        {
-          label: t('Upload CSV'),
-          name: 'Upload CSV file',
-          url: '/csvtodatabaseview/form',
-          perm: canUploadCSV && showUploads,
-          disable: isDisabled,
-        },
-        {
-          label: t('Upload columnar file'),
-          name: 'Upload columnar file',
-          url: '/columnartodatabaseview/form',
-          perm: canUploadColumnar && showUploads,
-          disable: isDisabled,
-        },
-        {
-          label: t('Upload Excel file'),
-          name: 'Upload Excel file',
-          url: '/exceltodatabaseview/form',
-          perm: canUploadExcel && showUploads,
-          disable: isDisabled,
-        },
-      ],
-    },
-  ];
+  // useEffect(() => hasFileUploadEnabled(), [databaseModalOpen]);
 
-  const hasFileUploadEnabled = () => {
-    const payload = {
-      filters: [
-        { col: 'allow_file_upload', opr: 'upload_is_enabled', value: true },
-      ],
-    };
-    SupersetClient.get({
-      endpoint: `/api/v1/database/?q=${rison.encode(payload)}`,
-    }).then(({ json }: Record<string, any>) => {
-      // There might be some existings Gsheets and Clickhouse DBs
-      // with allow_file_upload set as True which is not possible from now on
-      const allowedDatabasesWithFileUpload =
-        json?.result?.filter(
-          (database: any) => database?.engine_information?.supports_file_upload,
-        ) || [];
-      setAllowUploads(allowedDatabasesWithFileUpload?.length >= 1);
-    });
-  };
+  // const menuData: SubMenuProps = {
+  //   activeChild: 'Landscapes',
+  //   dropDownLinks: filteredDropDown,
+  //   name: t('Landscapes'),
+  // };
 
-  useEffect(() => hasFileUploadEnabled(), [databaseModalOpen]);
-
-  const filteredDropDown = uploadDropdownMenu.reduce((prev, cur) => {
-    // eslint-disable-next-line no-param-reassign
-    cur.childs = cur.childs.filter(item => item.perm);
-    if (!cur.childs.length) return prev;
-    prev.push(cur);
-    return prev;
-  }, [] as MenuObjectProps[]);
-
-  const menuData: SubMenuProps = {
-    activeChild: 'Landscapes',
-    dropDownLinks: filteredDropDown,
-    name: t('Landscapes'),
-  };
-
-  if (canCreate) {
-    menuData.buttons = [
-      {
-        'data-test': 'btn-create-database',
-        name: (
-          <>
-            <i className="fa fa-plus" /> {t('Database')}{' '}
-          </>
-        ),
-        buttonStyle: 'primary',
-        onClick: () => {
-          // Ensure modal will be opened in add mode
-          handleDatabaseEditModal({ modalOpen: true });
-        },
-      },
-    ];
-  }
+  // if (canCreate) {
+  //   menuData.buttons = [
+  //     {
+  //       'data-test': 'btn-create-database',
+  //       name: (
+  //         <>
+  //           <i className="fa fa-plus" /> {t('Database')}{' '}
+  //         </>
+  //       ),
+  //       buttonStyle: 'primary',
+  //       onClick: () => {
+  //         // Ensure modal will be opened in add mode
+  //         handleDatabaseEditModal({ modalOpen: true });
+  //       },
+  //     },
+  //   ];
+  // }
 
   function handleDatabaseExport(database: DatabaseObject) {
     if (database.id === undefined) {
       return;
     }
 
-    handleResourceExport('database', [database.id], () => {
+    handleResourceExport('landscape', [database.id], () => {
       setPreparingExport(false);
     });
     setPreparingExport(true);
@@ -293,8 +248,8 @@ function DatabaseList({ addDangerToast, addSuccessToast }: DatabaseListProps) {
   const columns = useMemo(
     () => [
       {
-        accessor: 'database_name',
-        Header: t('Landscape'),
+        accessor: 'landscape_name',
+        Header: t('Landscape Test'),
       },
       {
         accessor: 'backend',
@@ -492,7 +447,7 @@ function DatabaseList({ addDangerToast, addSuccessToast }: DatabaseListProps) {
       {
         Header: t('Search'),
         key: 'search',
-        id: 'database_name',
+        id: 'landscape_name',
         input: 'search',
         operator: FilterOperator.contains,
       },
@@ -502,20 +457,20 @@ function DatabaseList({ addDangerToast, addSuccessToast }: DatabaseListProps) {
 
   return (
     <>
-      <SubMenu {...menuData} />
-      <DatabaseModal
+      {/* <SubMenu {...menuData} /> */}
+      {/* <DatabaseModal
         databaseId={currentDatabase?.id}
         show={databaseModalOpen}
         onHide={handleDatabaseEditModal}
         onDatabaseAdd={() => {
           refreshData();
         }}
-      />
+      /> */}
       {databaseCurrentlyDeleting && (
         <DeleteModal
           description={t(
             'The database %s is linked to %s charts that appear on %s dashboards and users have %s SQL Lab tabs using this database open. Are you sure you want to continue? Deleting the database will break those objects.',
-            databaseCurrentlyDeleting.database_name,
+            databaseCurrentlyDeleting.landscape_name,
             databaseCurrentlyDeleting.chart_count,
             databaseCurrentlyDeleting.dashboard_count,
             databaseCurrentlyDeleting.sqllab_tab_count,
