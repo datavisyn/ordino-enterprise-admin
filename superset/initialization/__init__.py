@@ -178,6 +178,7 @@ class SupersetAppInitializer:  # pylint: disable=too-many-public-methods
         from superset.views.dynamic_plugins import DynamicPluginsView
         from superset.views.explore import ExplorePermalinkView, ExploreView
         from superset.views.key_value import KV
+        from superset.views.landscape.views import LandscapeView
         from superset.views.log.api import LogRestApi
         from superset.views.log.views import LogModelView
         from superset.views.redirects import R
@@ -242,19 +243,21 @@ class SupersetAppInitializer:  # pylint: disable=too-many-public-methods
             category="Data",
             category_label=__("Data"),
         )
+
         appbuilder.add_view(
-            DashboardModelView,
-            "Dashboards",
-            label=__("Dashboards"),
-            icon="fa-dashboard",
-            category="",
-            category_icon="",
+            LandscapeView,
+            "Landscapes",  # has to be contained in Mixins
+            label=__("Landscape Configurations"),
+            icon="fa-database",
+            category="Data",
+            category_label=__("Data"),
         )
-        appbuilder.add_view(
-            SliceModelView,
-            "Charts",
-            label=__("Charts"),
-            icon="fa-bar-chart",
+
+        appbuilder.add_link(
+            "Databases",
+            label=__("Landscapes"),
+            href="/landscapeview/list/",
+            icon="fa-database",
             category="",
             category_icon="",
         )
@@ -322,6 +325,7 @@ class SupersetAppInitializer:  # pylint: disable=too-many-public-methods
         appbuilder.add_view_no_menu(Superset)
         appbuilder.add_view_no_menu(TableColumnInlineView)
         appbuilder.add_view_no_menu(TableModelView)
+        appbuilder.add_view_no_menu(LandscapeView)
         appbuilder.add_view_no_menu(TableSchemaView)
         appbuilder.add_view_no_menu(TabStateView)
         appbuilder.add_view_no_menu(TaggedObjectView)
@@ -369,6 +373,7 @@ class SupersetAppInitializer:  # pylint: disable=too-many-public-methods
             category="SQL Lab",
             category_label=__("SQL Lab"),
         )
+
         appbuilder.add_view(
             TaggedObjectsModelView,
             "All Entities",

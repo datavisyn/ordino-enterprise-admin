@@ -71,6 +71,12 @@ const DatabaseList = lazy(
       /* webpackChunkName: "DatabaseList" */ 'src/views/CRUD/data/database/DatabaseList'
     ),
 );
+const LandscapeList = lazy(
+  () =>
+    import(
+      /* webpackChunkName: "LandscapeList" */ 'src/views/CRUD/data/landscape/LandscapeList'
+    ),
+);
 const DatasetList = lazy(
   () =>
     import(
@@ -151,6 +157,10 @@ export const routes: Routes = [
   {
     path: '/databaseview/list/',
     Component: DatabaseList,
+  },
+  {
+    path: '/landscapeview/list/',
+    Component: LandscapeList,
   },
   {
     path: '/savedqueryview/list/',
