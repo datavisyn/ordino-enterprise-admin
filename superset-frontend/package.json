@@ -1,7 +1,7 @@
 {
-  "name": "superset",
+  "name": "ordino-enterprise-admin",
   "version": "0.0.0-dev",
-  "description": "Superset is a data exploration platform designed to be visual, intuitive, and interactive.",
+  "description": "The administation dashboard for Ordino Enterprise",
   "keywords": [
     "big",
     "data",
@@ -14,13 +14,13 @@
     "database",
     "flask"
   ],
-  "homepage": "https://superset.apache.org/",
+  "homepage": "http://ordino-enterprise.io/",
   "bugs": {
-    "url": "https://github.com/apache/superset/issues"
+    "url": "https://github.com/datavisyn/ordino-enterprise-admin/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/apache/superset.git"
+    "url": "git+https://github.com/datavisyn/ordino-enterprise-admin.git"
   },
   "license": "Apache-2.0",
   "author": {
